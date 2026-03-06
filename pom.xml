@@ -17,6 +17,8 @@
 
     <!-- Свойства проекта -->
     <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.release>17</maven.compiler.release>
@@ -48,8 +50,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.everit-org.json-schema</groupId>
-            <artifactId>org.everit.json.schema</artifactId>
+            <groupId>com.github.erosb</groupId>
+            <artifactId>everit-json-schema</artifactId>
             <version>1.14.4</version>
         </dependency>
 
