@@ -41,6 +41,13 @@
             <artifactId>jackson-annotations</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+    
+        <!-- JSON Schema validation -->
+        <dependency>
+            <groupId>com.github.everit-org.json-schema</groupId>
+            <artifactId>org.everit.json.schema</artifactId>
+            <version>1.14.4</version>
+        </dependency>
 
         <!-- тестирование -->
         <dependency>
