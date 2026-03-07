@@ -58,12 +58,12 @@ public class Bus implements Comparable<Bus>{
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Bus bus = (Bus) o;
-        return Objects.equals(busNumber, bus.busNumber) && Objects.equals(model, bus.model);
+        return mileage == bus.mileage && Objects.equals(busNumber, bus.busNumber) && Objects.equals(model, bus.model);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(busNumber, model);
+        return Objects.hash(busNumber, model, mileage);
     }
 
     @Override
