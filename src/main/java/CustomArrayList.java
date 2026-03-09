@@ -1,6 +1,8 @@
 import java.util.AbstractList;
 import java.util.Arrays;
 
+//Кастомная коллекция реализована на коленке, надо разбираться. В ней пока много косяков.
+
 public class CustomArrayList<E> extends AbstractList<E> {
     private Object[] array;
     private int lastIndex;
