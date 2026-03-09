@@ -13,7 +13,7 @@ public class ManualInputStrategy implements  InputStrategyInterface {
     private String busNumber;
     private Models model;
     private int mileage;
-    private boolean endInput = true;
+    private boolean endInput = false;
     BusNumberValidator busNumberValidator = new BusNumberValidator();
     BusModelValidator busModelValidator = new BusModelValidator();
     BusMileageValidator busMileageValidator = new BusMileageValidator();
@@ -43,19 +43,23 @@ public class ManualInputStrategy implements  InputStrategyInterface {
                 busList.add(busBuilder.build());
             }
             else throw new IllegalArgumentException("ERROR: Failed to create a bus object! Check your input parameters!\n");
-            System.out.println("Bus object has been created!\n" +
-                    "Do you want to create another bus object? Y/N\n");
+            System.out.println("""
+                    Bus object has been created!
+                    Do you want to create another bus object? Y/N
+                    """);
             Scanner inputScanner = new Scanner(System.in);
             char input;
             while(true) {
                 input = inputScanner.next().charAt(0);
                 if(input == 'Y' || input == 'y') {
                     System.out.println("Preparing to create another bus...\n");
-                    endInput = true;
+                    endInput = false;
+                    break;
                 }
                 if (input == 'N' || input == 'n') {
                     System.out.println("Exiting current input session...\n");
-                    endInput = false;
+                    endInput = true;
+                    break;
                 }
                 else System.out.println("ERROR: Wrong input! Please, choose Y to continue, or N to exit!\n");
             }
