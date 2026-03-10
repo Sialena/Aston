@@ -1,7 +1,7 @@
 import java.util.AbstractList;
 import java.util.Arrays;
 
-//Кастомная коллекция реализована на коленке, надо разбираться. В ней пока много косяков.
+//WIP
 
 public class CustomArrayList<E> extends AbstractList<E> {
     private Object[] array;
@@ -19,7 +19,7 @@ public class CustomArrayList<E> extends AbstractList<E> {
     }
 
     public CustomArrayList() {
-        this.array = new Object[0];
+        this.array = new Object[5];
         this.lastIndex = -1;
     }
 
@@ -36,28 +36,22 @@ public class CustomArrayList<E> extends AbstractList<E> {
 
     @Override
     public int size() {
-        return array.length;
+        return lastIndex;
     }
 
     @Override
     public boolean add(E e) {
-        try {
-            if (e != null && lastIndex < array.length - 1) {
-                array[++lastIndex] = e;
-                return true;
-            }
-            if (e !=null && lastIndex == array.length - 1) {
-                array = Arrays.copyOf(array, array.length + 1);
-                array[++lastIndex] = e;
-                return true;
-            }
-            if (e == null) {
-                System.out.println("The value you're trying to add is 'null'!");
-                return false;
-            }
+        if (e != null && lastIndex < array.length - 1) {
+            array[++lastIndex] = e;
+            return true;
         }
-        catch (IllegalArgumentException a) {
-            System.out.println("The element type you're trying to add does not match this collection: " + a);
+        if (e != null && lastIndex == array.length - 1) {
+            array = Arrays.copyOf(array, array.length + 5);
+            array[++lastIndex] = e;
+            return true;
+        }
+        if (e == null) {
+            System.out.println("The value you're trying to add is 'null'!");
             return false;
         }
         return false;
