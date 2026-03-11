@@ -1,9 +1,9 @@
 package input_strategies;
 
 import entity.Bus;
-import java.util.List;
+import java.util.stream.Stream;
 
 @FunctionalInterface
 public interface InputStrategyInterface {
-    Bus write();
+    Stream<Bus> write();
 }

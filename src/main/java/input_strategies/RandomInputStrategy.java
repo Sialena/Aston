@@ -3,6 +3,7 @@ package input_strategies;
 import entity.Bus;
 import entity.Models;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class RandomInputStrategy implements InputStrategyInterface {
     private String busNumber;
@@ -11,7 +12,7 @@ public class RandomInputStrategy implements InputStrategyInterface {
     Bus.Builder busBuilder = new Bus.Builder();
 
     @Override
-    public Bus write() {
+    public Stream<Bus> write() {
         Random random = new Random();
         char firstChar = (char) (random.nextInt(26) + 'A');
         char secondChar = (char) (random.nextInt(26) + 'A');
@@ -26,6 +27,6 @@ public class RandomInputStrategy implements InputStrategyInterface {
         mileage = random.nextInt(0, 500000);
         busBuilder.mileage(this.mileage);
 
-        return busBuilder.build();
+        return Stream.of(busBuilder.build());
     }
 }

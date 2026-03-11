@@ -1,6 +1,7 @@
 package input_strategies;
 
 import entity.Bus;
+import java.util.stream.Stream;
 
 public class ManualInputStrategy implements  InputStrategyInterface {
     private String busNumber;
@@ -9,11 +10,11 @@ public class ManualInputStrategy implements  InputStrategyInterface {
     Bus.Builder busBuilder = new Bus.Builder();
 
     @Override
-    public Bus write() {
+    public Stream<Bus> write() {
         busBuilder.busNumber(this.busNumber);
         busBuilder.model(this.model);
         busBuilder.mileage(this.mileage);
-        return busBuilder.build();
+        return Stream.of(busBuilder.build());
     }
 
     public void setBusNumber(String busNumber) {
