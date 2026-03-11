@@ -4,8 +4,7 @@ import java.util.Objects;
 
 public class Bus implements Comparable<Bus>{
     private String busNumber;
-    //Так как тип модели поменялся на ENUM - надо хорошенько пересмотреть чтобы работали хэшкоды, иквалсы, и т.д.
-    private Models model;
+    private String model;
     private int mileage;
 
     public Bus(Builder builder) {
@@ -14,7 +13,7 @@ public class Bus implements Comparable<Bus>{
         this.mileage = builder.mileage;
     }
 
-    public Bus(String busNumber, Models model, int mileage) {
+    public Bus(String busNumber, String model, int mileage) {
         this.busNumber = busNumber;
         this.model = model;
         this.mileage = mileage;
@@ -30,11 +29,11 @@ public class Bus implements Comparable<Bus>{
         this.busNumber = busNumber;
     }
 
-    public Models getModel() {
+    public String getModel() {
         return model;
     }
 
-    public void setModel(Models model) {
+    public void setModel(String model) {
         this.model = model;
     }
 
@@ -80,7 +79,7 @@ public class Bus implements Comparable<Bus>{
 
     public static class Builder {
         private String busNumber = "";
-        private Models model = null;
+        private String model = "";
         private int mileage = 0;
 
         public Builder busNumber(String busNumber) {
@@ -88,7 +87,7 @@ public class Bus implements Comparable<Bus>{
             return this;
         }
 
-        public Builder model(Models model) {
+        public Builder model(String model) {
             this.model = model;
             return this;
         }

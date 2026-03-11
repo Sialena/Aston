@@ -5,5 +5,5 @@ import java.util.List;
 
 @FunctionalInterface
 public interface InputStrategyInterface {
-    List<Bus> write();
+    Bus write();
 }
