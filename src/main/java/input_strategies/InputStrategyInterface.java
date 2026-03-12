@@ -5,9 +5,9 @@ import java.util.stream.Stream;
 
 public interface InputStrategyInterface {
     Stream<Bus> write();
-    public void setBusNumber(String busNumber);
-    public void setModel(String model);
-    public void setMileage(int mileage);
-    public void busBuilderReset();
-    public void setFilepath(String filepath);
+    void setBusNumber(String busNumber);
+    void setModel(String model);
+    void setMileage(int mileage);
+    void busBuilderReset();
+    void setFilepath(String filepath);
 }

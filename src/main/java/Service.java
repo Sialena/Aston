@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Service {
-    private StrategySelector strategySelector;
-    private BusValidator busValidator;
+    private final StrategySelector strategySelector;
+    private final BusValidator busValidator;
     private final InputStrategyInterface manualInputStrategy = new ManualInputStrategy();
     private final InputStrategyInterface randomInputStrategy = new RandomInputStrategy();
     private final InputStrategyInterface fileInputStrategy = new FileInputStrategy();
@@ -49,6 +49,7 @@ public class Service {
             }
             Stream<Bus> busStream = strategySelector.getBuses();
             busStream.forEach(busList::add);
+            manualInputStrategy.busBuilderReset();
         }
         return busList;
     }
@@ -59,6 +60,7 @@ public class Service {
         for (int step = 1; step <= busCount; ++step) {
             Stream<Bus> busStream = strategySelector.getBuses();
             busStream.filter(busValidator::validateBusObject).forEach(busList::add);
+            randomInputStrategy.busBuilderReset();
         }
         return busList;
     }
@@ -66,13 +68,14 @@ public class Service {
     public List<Bus> busListFileInput(String filepath) {
         List<Bus> busList = new ArrayList<>();
         strategySelector.setStrategy(fileInputStrategy);
+        fileInputStrategy.setFilepath(filepath);
         Stream<Bus> busStream = strategySelector.getBuses();
         busStream.filter(busValidator::validateBusObject).forEach(busList::add);
         return busList;
     }
 
     public CustomArrayList<Bus> listToCustomArrayList(List<Bus> busList) {
-        CustomArrayList<Bus> busCustomList = new CustomArrayList<>();
+        CustomArrayList<Bus> busCustomList;
         busCustomList = busList.stream().collect(Collectors.toCollection(CustomArrayList::new));
         return busCustomList;
     }
