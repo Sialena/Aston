@@ -7,7 +7,11 @@ public class ManualInputStrategy implements  InputStrategyInterface {
     private String busNumber;
     private String model;
     private int mileage;
-    Bus.Builder busBuilder = new Bus.Builder();
+    private final Bus.Builder busBuilder;
+
+    public ManualInputStrategy() {
+        busBuilder = new Bus.Builder();
+    }
 
     @Override
     public Stream<Bus> write() {

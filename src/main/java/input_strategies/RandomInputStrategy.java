@@ -9,11 +9,16 @@ public class RandomInputStrategy implements InputStrategyInterface {
     private String busNumber;
     private String model;
     private int mileage;
-    Bus.Builder busBuilder = new Bus.Builder();
+    private final Bus.Builder busBuilder;
+    private final Random random;
+
+    public RandomInputStrategy() {
+        busBuilder = new Bus.Builder();
+        random = new Random();
+    }
 
     @Override
     public Stream<Bus> write() {
-        Random random = new Random();
         char firstChar = (char) (random.nextInt(26) + 'A');
         char secondChar = (char) (random.nextInt(26) + 'A');
         int randomBusNumber = random.nextInt(1000, 9999);
