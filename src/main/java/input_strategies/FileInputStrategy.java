@@ -29,7 +29,20 @@ public class FileInputStrategy implements InputStrategyInterface {
         }
     }
 
+    @Override
     public void setFilepath(String filepath) {
         this.filepath = filepath;
     }
+
+    @Override
+    public void setBusNumber(String busNumber) {}
+
+    @Override
+    public void setModel(String model) {}
+
+    @Override
+    public void setMileage(int mileage) {}
+
+    @Override
+    public void busBuilderReset() {}
 }

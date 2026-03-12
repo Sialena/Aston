@@ -34,4 +34,23 @@ public class RandomInputStrategy implements InputStrategyInterface {
 
         return Stream.of(busBuilder.build());
     }
+
+    @Override
+    public void busBuilderReset() {
+        busNumber = null;
+        model = null;
+        mileage = -1;
+    }
+
+    @Override
+    public void setBusNumber(String busNumber) {}
+
+    @Override
+    public void setModel(String model) {}
+
+    @Override
+    public void setMileage(int mileage) {}
+
+    @Override
+    public void setFilepath(String filepath) {}
 }
