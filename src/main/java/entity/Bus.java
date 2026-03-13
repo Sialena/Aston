@@ -19,7 +19,7 @@ public class Bus implements Comparable<Bus>{
         this.mileage = mileage;
     }
 
-    public Bus() {};
+    public Bus() {}
 
     public String getBusNumber() {
         return busNumber;
