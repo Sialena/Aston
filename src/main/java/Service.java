@@ -1,5 +1,7 @@
 import entity.Bus;
+import entity.Models;
 import input_strategies.*;
+import output.WriteToJson;
 import validators.BusValidator;
 
 import java.util.ArrayList;
@@ -11,13 +13,18 @@ import java.util.stream.Stream;
 public class Service {
     private final StrategySelector strategySelector;
     private final BusValidator busValidator;
-    private final InputStrategyInterface manualInputStrategy = new ManualInputStrategy();
-    private final InputStrategyInterface randomInputStrategy = new RandomInputStrategy();
-    private final InputStrategyInterface fileInputStrategy = new FileInputStrategy();
+    private final InputStrategyInterface manualInputStrategy;
+    private final InputStrategyInterface randomInputStrategy;
+    private final InputStrategyInterface fileInputStrategy;
+    private final WriteToJson jsonWriter;
 
     public Service() {
         strategySelector = new StrategySelector();
         busValidator = new BusValidator();
+        manualInputStrategy = new ManualInputStrategy();
+        randomInputStrategy = new RandomInputStrategy();
+        fileInputStrategy = new FileInputStrategy();
+        jsonWriter = new WriteToJson();
     }
 
     public List<Bus> busListManualInput(int busCount) {
@@ -33,13 +40,21 @@ public class Service {
                     break;
                 }
             }
+            System.out.println("Please select bus model from the list below:\n");
+            for (int listStep = 1; listStep <= Models.values().length; ++listStep) {
+                for(Models model : Models.values()) {
+                    System.out.println(listStep + " - " + model.getValue());
+                }
+                System.out.println('\n');
+            }
             while(true) {
-                String busModel = inputScanner.next();
-                if (busValidator.validateBusModel(busModel)) {
-                    manualInputStrategy.setModel(busModel);
+                int selectedBusModel = inputScanner.nextInt();
+                if (busValidator.validateBusModel(selectedBusModel)) {
+                    manualInputStrategy.setModel(Models.values()[selectedBusModel].getValue());
                     break;
                 }
             }
+            System.out.println("Please, assign a mileage from 0 to 500000:\n");
             while(true) {
                 int mileage = inputScanner.nextInt();
                 if (busValidator.validateMileage(mileage)) {
@@ -78,5 +93,9 @@ public class Service {
         CustomArrayList<Bus> busCustomList;
         busCustomList = busList.stream().collect(Collectors.toCollection(CustomArrayList::new));
         return busCustomList;
+    }
+
+    public void writeToJson(String filepath, List<Bus> busList) {
+        jsonWriter.writeToJson(filepath, busList);
     }
 }
