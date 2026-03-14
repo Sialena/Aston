@@ -2,13 +2,12 @@ package validators;
 
 import entity.Bus;
 import entity.Models;
-
 import java.util.Objects;
 
 public class BusValidator {
 
     public boolean validateBusNumber(String busNumber) {
-        if (busNumber.isEmpty()) {
+        if (busNumber == null || busNumber.trim().isEmpty()) {
             System.out.println("Bus number cannot be empty!");
             return false;
         }

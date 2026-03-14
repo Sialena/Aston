@@ -11,6 +11,6 @@ public class StrategySelector {
     }
 
     public Stream<Bus> getBuses() {
-        return strategy.write();
+        return strategy.busWrite();
     }
 }

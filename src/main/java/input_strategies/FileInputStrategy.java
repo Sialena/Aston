@@ -1,14 +1,12 @@
 package input_strategies;
 
-import com.fasterxml.jackson.databind.MappingIterator;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Bus;
 import java.io.File;
 import java.io.IOException;
-import java.util.Spliterator;
-import java.util.Spliterators;
+import java.util.List;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 public class FileInputStrategy implements InputStrategyInterface {
     private final ObjectMapper objectMapper;
@@ -19,10 +17,11 @@ public class FileInputStrategy implements InputStrategyInterface {
     }
 
     @Override
-    public Stream<Bus> write() {
+    public Stream<Bus> busWrite() {
         File file = new File(filepath);
-        try (MappingIterator<Bus> iterator = objectMapper.readerFor(Bus.class).readValues(file)) {
-            return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED), false);
+        try {
+            List<Bus> buses = objectMapper.readValue(file, new TypeReference<>() {});
+            return buses.stream();
         }
         catch (IOException e) {
             throw new RuntimeException("Can't read from this file " + filepath + '!', e);
