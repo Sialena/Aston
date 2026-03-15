@@ -1,0 +1,9 @@
+[
+  {"busNumber": "AD-4102", "model": "Mercedes", "mileage": 89011},
+  {"busNumber": "LN-3819", "model": "Mitsubishi", "mileage": 37119},
+  {"busNumber": "RL-1337", "model": "BYD", "mileage": 169381},
+  {"busNumber": "TY-8429", "model": "Volvo", "mileage": 71800},
+  {"busNumber": "AN-4714", "model": "PAZ", "mileage": 281592},
+  {"busNumber": "LD-1407", "model": "Icarus", "mileage": 311842},
+  {"busNumber": "JH-6825", "model": "Neoplan", "mileage": 111831}
+]

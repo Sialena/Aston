@@ -18,19 +18,19 @@ public class RandomInputStrategy implements InputStrategyInterface {
     }
 
     @Override
-    public Stream<Bus> write() {
+    public Stream<Bus> busWrite() {
         char firstChar = (char) (random.nextInt(26) + 'A');
         char secondChar = (char) (random.nextInt(26) + 'A');
         int randomBusNumber = random.nextInt(1000, 9999);
-        busNumber = firstChar + secondChar + '-' + String.valueOf(randomBusNumber);
-        busBuilder.busNumber(this.busNumber);
+        busNumber = String.valueOf(firstChar) + secondChar + '-' + randomBusNumber;
+        busBuilder.busNumber(busNumber);
 
         int randomModelSelection = random.nextInt(Models.values().length);
         model = Models.values()[randomModelSelection].getValue();
-        busBuilder.model(this.model);
+        busBuilder.model(model);
 
         mileage = random.nextInt(0, 500000);
-        busBuilder.mileage(this.mileage);
+        busBuilder.mileage(mileage);
 
         return Stream.of(busBuilder.build());
     }
