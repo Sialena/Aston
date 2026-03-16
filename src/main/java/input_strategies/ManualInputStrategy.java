@@ -14,7 +14,7 @@ public class ManualInputStrategy implements  InputStrategyInterface {
     }
 
     @Override
-    public Stream<Bus> write() {
+    public Stream<Bus> busWrite() {
         busBuilder.busNumber(this.busNumber);
         busBuilder.model(this.model);
         busBuilder.mileage(this.mileage);

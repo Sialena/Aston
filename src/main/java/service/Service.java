@@ -1,7 +1,11 @@
-import entity.Bus;
-import input_strategies.*;
-import validators.BusValidator;
+package service;
 
+import entity.Bus;
+import entity.Models;
+import input_strategies.*;
+import output.WriteToJson;
+import resources.CustomArrayList;
+import validators.BusValidator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,13 +15,18 @@ import java.util.stream.Stream;
 public class Service {
     private final StrategySelector strategySelector;
     private final BusValidator busValidator;
-    private final InputStrategyInterface manualInputStrategy = new ManualInputStrategy();
-    private final InputStrategyInterface randomInputStrategy = new RandomInputStrategy();
-    private final InputStrategyInterface fileInputStrategy = new FileInputStrategy();
+    private final InputStrategyInterface manualInputStrategy;
+    private final InputStrategyInterface randomInputStrategy;
+    private final InputStrategyInterface fileInputStrategy;
+    private final WriteToJson jsonWriter;
 
     public Service() {
         strategySelector = new StrategySelector();
         busValidator = new BusValidator();
+        manualInputStrategy = new ManualInputStrategy();
+        randomInputStrategy = new RandomInputStrategy();
+        fileInputStrategy = new FileInputStrategy();
+        jsonWriter = new WriteToJson();
     }
 
     public List<Bus> busListManualInput(int busCount) {
@@ -25,7 +34,7 @@ public class Service {
         strategySelector.setStrategy(manualInputStrategy);
         Scanner inputScanner = new Scanner(System.in);
         for (int step = 1; step <= busCount; ++step) {
-            System.out.println("Please, enter bus number, consisting of 2 letters, a dash symbol and 4 numbers (EXAMPLE: XX-1234):\n");
+            System.out.println("Please, enter bus number, consisting of 2 letters, a dash symbol and 4 numbers (EXAMPLE: XX-1234):");
             while(true) {
                 String busNumber = inputScanner.next();
                 if (busValidator.validateBusNumber(busNumber)) {
@@ -33,13 +42,21 @@ public class Service {
                     break;
                 }
             }
+            System.out.println("Please select bus model from the list below:");
+            int listNumber = 1;
+            for(Models model : Models.values()) {
+                System.out.println(listNumber + " - " + model.getValue());
+                ++listNumber;
+            }
+            System.out.println('\n');
             while(true) {
-                String busModel = inputScanner.next();
-                if (busValidator.validateBusModel(busModel)) {
-                    manualInputStrategy.setModel(busModel);
+                int selectedBusModel = inputScanner.nextInt();
+                if (busValidator.validateBusModel(selectedBusModel)) {
+                    manualInputStrategy.setModel(Models.values()[selectedBusModel - 1].getValue());
                     break;
                 }
             }
+            System.out.println("Please, assign a mileage from 0 to 500000:");
             while(true) {
                 int mileage = inputScanner.nextInt();
                 if (busValidator.validateMileage(mileage)) {
@@ -51,6 +68,7 @@ public class Service {
             busStream.forEach(busList::add);
             manualInputStrategy.busBuilderReset();
         }
+        inputScanner.close();
         return busList;
     }
 
@@ -78,5 +96,9 @@ public class Service {
         CustomArrayList<Bus> busCustomList;
         busCustomList = busList.stream().collect(Collectors.toCollection(CustomArrayList::new));
         return busCustomList;
+    }
+
+    public void writeToJson(List<Bus> busList) {
+        jsonWriter.writeToJson(busList);
     }
 }
