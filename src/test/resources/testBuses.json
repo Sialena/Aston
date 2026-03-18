@@ -1,0 +1,12 @@
+[
+  {
+    "busNumber": "100",
+    "model": "Mercedes",
+    "mileage": 100000
+  },
+  {
+    "busNumber": "200",
+    "model": "Iveco",
+    "mileage": 150000
+  }
+]
