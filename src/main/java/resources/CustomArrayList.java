@@ -3,8 +3,6 @@ package resources;
 import java.util.AbstractList;
 import java.util.Arrays;
 
-//WIP
-
 public class CustomArrayList<E> extends AbstractList<E> {
     private Object[] array;
     private int lastIndex;
@@ -38,7 +36,7 @@ public class CustomArrayList<E> extends AbstractList<E> {
 
     @Override
     public int size() {
-        return lastIndex;
+        return lastIndex + 1;
     }
 
     @Override
