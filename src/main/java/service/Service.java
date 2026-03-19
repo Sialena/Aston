@@ -36,7 +36,7 @@ public class Service {
         for (int step = 1; step <= busCount; ++step) {
             System.out.println("Please, type bus number, consisting of 2 letters, a dash symbol and 4 numbers (EXAMPLE: XX-1234), then press 'enter':");
             while(true) {
-                String busNumber = inputScanner.next();
+                String busNumber = inputScanner.nextLine();
                 if (busValidator.validateBusNumber(busNumber)) {
                     manualInputStrategy.setBusNumber(busNumber);
                     break;
