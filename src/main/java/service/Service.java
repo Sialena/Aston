@@ -64,10 +64,16 @@ public class Service {
             }
             System.out.println("Please, assign a mileage from 0 to 500000, then press 'enter':");
             while(true) {
-                int mileage = inputScanner.nextInt();
-                if (busValidator.validateMileage(mileage)) {
-                    manualInputStrategy.setMileage(mileage);
-                    break;
+                if (inputScanner.hasNextInt()) {
+                    int mileage = inputScanner.nextInt();
+                    if (busValidator.validateMileage(mileage)) {
+                        manualInputStrategy.setMileage(mileage);
+                        break;
+                    }
+                }
+                else {
+                    inputScanner.next();
+                    System.out.println("Please, enter the number from the list!");
                 }
             }
             Stream<Bus> busStream = strategySelector.getBuses();
