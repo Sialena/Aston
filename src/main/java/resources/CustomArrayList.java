@@ -1,5 +1,6 @@
 package resources;
 
+import java.io.UncheckedIOException;
 import java.util.AbstractList;
 import java.util.Arrays;
 
@@ -25,13 +26,8 @@ public class CustomArrayList<E> extends AbstractList<E> {
 
     @Override
     public E get(int index) {
-        try {
-            return (E) array[index];
-        }
-        catch (IndexOutOfBoundsException e) {
-            System.out.println("Index not found: " + e);
-            return null;
-        }
+        if(index < 0 || index > lastIndex) throw new IndexOutOfBoundsException("There's no such index!");
+        return (E) array[index];
     }
 
     @Override
@@ -41,19 +37,22 @@ public class CustomArrayList<E> extends AbstractList<E> {
 
     @Override
     public boolean add(E e) {
-        if (e != null && lastIndex < array.length - 1) {
-            array[++lastIndex] = e;
-            return true;
-        }
-        if (e != null && lastIndex == array.length - 1) {
+        if (lastIndex == array.length - 1) {
             array = Arrays.copyOf(array, array.length + 5);
-            array[++lastIndex] = e;
-            return true;
         }
         if (e == null) {
             System.out.println("The value you're trying to add is 'null'!");
             return false;
         }
-        return false;
+        array[++lastIndex] = e;
+        return true;
+    }
+
+    @Override
+    public E set(int index, E newValue) {
+        if (index < 0 || index > lastIndex) throw new IndexOutOfBoundsException("There's no such index!");
+        E oldValue = (E) array[index];
+        array[index] = newValue;
+        return oldValue;
     }
 }
