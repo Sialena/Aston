@@ -50,10 +50,16 @@ public class Service {
             }
             System.out.println('\n');
             while(true) {
-                int selectedBusModel = inputScanner.nextInt();
-                if (busValidator.validateBusModel(selectedBusModel)) {
-                    manualInputStrategy.setModel(Models.values()[selectedBusModel - 1].getValue());
-                    break;
+                if (inputScanner.hasNextInt()) {
+                    int selectedBusModel = inputScanner.nextInt();
+                    if (busValidator.validateBusModel(selectedBusModel)) {
+                        manualInputStrategy.setModel(Models.values()[selectedBusModel - 1].getValue());
+                        break;
+                    }
+                }
+                else {
+                    inputScanner.next();
+                    System.out.println("Please, enter the number from the list!");
                 }
             }
             System.out.println("Please, assign a mileage from 0 to 500000, then press 'enter':");
