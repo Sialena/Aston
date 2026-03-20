@@ -15,6 +15,10 @@ public class BusValidator {
             System.out.println("Input number doesn't match the example!");
             return false;
         }
+        if (busNumber.contains(" ")) {
+            System.out.println("Input number doesn't match the example!");
+            return false;
+        }
         else {
             return true;
         }
