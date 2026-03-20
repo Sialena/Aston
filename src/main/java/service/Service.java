@@ -34,15 +34,15 @@ public class Service {
         strategySelector.setStrategy(manualInputStrategy);
         Scanner inputScanner = new Scanner(System.in);
         for (int step = 1; step <= busCount; ++step) {
-            System.out.println("Please, enter bus number, consisting of 2 letters, a dash symbol and 4 numbers (EXAMPLE: XX-1234):");
+            System.out.println("Please, type bus number, consisting of 2 letters, a dash symbol and 4 numbers (EXAMPLE: XX-1234), then press 'enter':");
             while(true) {
-                String busNumber = inputScanner.next();
+                String busNumber = inputScanner.nextLine();
                 if (busValidator.validateBusNumber(busNumber)) {
                     manualInputStrategy.setBusNumber(busNumber);
                     break;
                 }
             }
-            System.out.println("Please select bus model from the list below:");
+            System.out.println("Please select bus model from the list below, then press 'enter':");
             int listNumber = 1;
             for(Models model : Models.values()) {
                 System.out.println(listNumber + " - " + model.getValue());
@@ -50,18 +50,30 @@ public class Service {
             }
             System.out.println('\n');
             while(true) {
-                int selectedBusModel = inputScanner.nextInt();
-                if (busValidator.validateBusModel(selectedBusModel)) {
-                    manualInputStrategy.setModel(Models.values()[selectedBusModel - 1].getValue());
-                    break;
+                if (inputScanner.hasNextInt()) {
+                    int selectedBusModel = inputScanner.nextInt();
+                    if (busValidator.validateBusModel(selectedBusModel)) {
+                        manualInputStrategy.setModel(Models.values()[selectedBusModel - 1].getValue());
+                        break;
+                    }
+                }
+                else {
+                    inputScanner.next();
+                    System.out.println("Please, enter the number from the list!");
                 }
             }
-            System.out.println("Please, assign a mileage from 0 to 500000:");
+            System.out.println("Please, assign a mileage from 0 to 500000, then press 'enter':");
             while(true) {
-                int mileage = inputScanner.nextInt();
-                if (busValidator.validateMileage(mileage)) {
-                    manualInputStrategy.setMileage(mileage);
-                    break;
+                if (inputScanner.hasNextInt()) {
+                    int mileage = inputScanner.nextInt();
+                    if (busValidator.validateMileage(mileage)) {
+                        manualInputStrategy.setMileage(mileage);
+                        break;
+                    }
+                }
+                else {
+                    inputScanner.next();
+                    System.out.println("Please, enter the number from the list!");
                 }
             }
             Stream<Bus> busStream = strategySelector.getBuses();
