@@ -23,11 +23,29 @@ public class EvenFieldSortStrategy implements BusSortingStrategy {
 
     @Override
     public void sort(List<Bus> buses, Comparator<Bus> ignoredComparator) {
-        if (buses == null || buses.size() < 2) {
+        if (buses == null || buses.isEmpty()) {
             return;
         }
 
-        List<Bus> copy = new ArrayList<>(buses);
+        List<Integer> evenIndices = new ArrayList<>();
+        for (int i = 0; i < buses.size(); i++) {
+            Number fieldValue = fieldFunction.apply(buses.get(i));
+            if (fieldValue == null) {
+                continue;
+            }
+            if (fieldValue.intValue() % 2 == 0) {
+                evenIndices.add(i);
+            }
+        }
+
+        if (evenIndices.size() < 2) {
+            return;
+        }
+
+        List<Bus> evenBuses = new ArrayList<>();
+        for (int idx : evenIndices) {
+            evenBuses.add(buses.get(idx));
+        }
 
         Comparator<Bus> busComparator = new Comparator<Bus>() {
             @Override
@@ -51,28 +69,10 @@ public class EvenFieldSortStrategy implements BusSortingStrategy {
             }
         };
 
-        baseStrategy.sort(copy, busComparator);
+        baseStrategy.sort(evenBuses, busComparator);
 
-        int positionInSorted = 0;
-
-        for (int i = 0; i < buses.size(); i++) {
-            Bus currentBus = buses.get(i);
-            Number fieldValue = fieldFunction.apply(currentBus);
-
-            if (fieldValue == null) {
-                continue;
-            }
-
-            int intValue = fieldValue.intValue();
-
-            if (intValue % 2 == 0) {
-                if (positionInSorted < copy.size()) {
-                    Bus newBus = copy.get(positionInSorted);
-                    buses.set(i, newBus);
-                    positionInSorted = positionInSorted + 1;
-                }
-            }
+        for (int k = 0; k < evenIndices.size(); k++) {
+            buses.set(evenIndices.get(k), evenBuses.get(k));
         }
     }
 }
-

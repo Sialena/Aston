@@ -65,10 +65,10 @@ class SortingStrategiesTest {
 
     @Test
     void evenFieldSort_replacesOnlyEvenFieldElements() {
-        Bus b1 = new Bus("AA-0001", "X", 3);  // odd -> stays
-        Bus b2 = new Bus("AA-0002", "X", 10); // even -> replaced
-        Bus b3 = new Bus("AA-0003", "X", 5);  // odd -> stays
-        Bus b4 = new Bus("AA-0004", "X", 2);  // even -> replaced
+        Bus b1 = new Bus("AA-0001", "X", 3);
+        Bus b2 = new Bus("AA-0002", "X", 10);
+        Bus b3 = new Bus("AA-0003", "X", 5);
+        Bus b4 = new Bus("AA-0004", "X", 2);
 
         List<Bus> original = new ArrayList<>(Arrays.asList(b1, b2, b3, b4));
 
@@ -86,12 +86,18 @@ class SortingStrategiesTest {
 
         strategy.sort(original, null);
 
-        // copy sorted by mileage asc: [2, 3, 5, 10]
-        // replace even-mileage positions (b2 and b4) with next from sorted copy in order -> 2 then 3
-        assertSame(b1, original.get(0));          // odd stays
+        assertSame(b1, original.get(0));
+        assertSame(b4, original.get(1));
         assertEquals(2, original.get(1).getMileage());
-        assertSame(b3, original.get(2));          // odd stays
-        assertEquals(3, original.get(3).getMileage());
+        assertSame(b3, original.get(2));
+        assertSame(b2, original.get(3));
+        assertEquals(10, original.get(3).getMileage());
+
+        for (int i = 0; i < original.size(); i++) {
+            for (int j = i + 1; j < original.size(); j++) {
+                assertNotSame(original.get(i), original.get(j));
+            }
+        }
     }
 
     @Test
