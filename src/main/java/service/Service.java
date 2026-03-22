@@ -29,10 +29,9 @@ public class Service {
         jsonWriter = new WriteToJson();
     }
 
-    public List<Bus> busListManualInput(int busCount) {
+    public List<Bus> busListManualInput(int busCount, Scanner inputScanner) {
         List<Bus> busList = new ArrayList<>();
         strategySelector.setStrategy(manualInputStrategy);
-        Scanner inputScanner = new Scanner(System.in);
         for (int step = 1; step <= busCount; ++step) {
             System.out.println("Please, type bus number, consisting of 2 letters, a dash symbol and 4 numbers (EXAMPLE: XX-1234), then press 'enter':");
             while(true) {
@@ -48,7 +47,7 @@ public class Service {
                 System.out.println(listNumber + " - " + model.getValue());
                 ++listNumber;
             }
-            System.out.println('\n');
+            System.out.println(" ");
             while(true) {
                 if (inputScanner.hasNextInt()) {
                     int selectedBusModel = inputScanner.nextInt();
@@ -80,7 +79,6 @@ public class Service {
             busStream.forEach(busList::add);
             manualInputStrategy.busBuilderReset();
         }
-        inputScanner.close();
         return busList;
     }
 
