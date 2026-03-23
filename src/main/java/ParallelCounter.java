@@ -1,8 +1,14 @@
-package utils;
-
-
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.function.Function;  // добавлен импорт
 
 public class ParallelCounter {
 
@@ -60,5 +66,12 @@ public class ParallelCounter {
             chunks.add(chunk);
         }
         return chunks;
+    }
+
+    // Новый метод для подсчёта по полю
+    public static <T, R> int countByField(List<T> list, Function<T, R> extractor, R value) {
+        return (int) list.parallelStream()
+                .filter(item -> extractor.apply(item).equals(value))
+                .count();
     }
 }

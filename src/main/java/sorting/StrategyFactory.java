@@ -1,6 +1,8 @@
 package sorting;
 
 import entity.Bus;
+import sorting.InsertionBusSortingStrategy;
+import sorting.QuickBusSortingStrategy;
 
 import java.util.Comparator;
 import java.util.function.Function;
@@ -32,6 +34,11 @@ public class StrategyFactory {
         switch (type) {
             case BUBBLE:
                 return new BubbleBusSortingStrategy();
+            //добавила QUICK и INSERTION
+            case QUICK:
+            return new QuickBusSortingStrategy();
+            case INSERTION:
+            return new InsertionBusSortingStrategy(); 
             case EVEN_ODD:
                 return new EvenFieldSortStrategy(
                         new BubbleBusSortingStrategy(),
