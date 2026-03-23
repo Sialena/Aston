@@ -30,7 +30,7 @@ public abstract class MenuEntryExemple {
 
     public abstract void run();
 
-    private static int readCount(String prompt, Scanner scanner) {
+    protected static int readCount(String prompt, Scanner scanner) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine();
@@ -50,7 +50,7 @@ public abstract class MenuEntryExemple {
         }
     }
 
-    private static void handleDataMenu(List<Bus> buses, Scanner scanner, Service service) {
+    protected static void handleDataMenu(List<Bus> buses, Scanner scanner, Service service) {
         while(true) {
         System.out.println("\nWhat to do with the data?"); //  Что сделать с данными?
         System.out.println("\n1. Show list"); // Показать список
@@ -291,36 +291,36 @@ public abstract class MenuEntryExemple {
 
         while (true) {
             System.out.println("\nWelcome! Please select a method for filling out your data.:"); //Добро пожаловать! Выберите способ заполнения данных.
-            System.out.println("\n1. Manual input."); 
-            System.out.println("\n2. Reading a file."); 
-            System.out.println("\n3. Random generation."); 
-            System.out.println("\n4. Exit."); 
+            System.out.println("\n1. Manual input.");
+            System.out.println("\n2. Reading a file.");
+            System.out.println("\n3. Random generation.");
+            System.out.println("\n4. Exit.");
             System.out.print("\nYour choice: "); // Ваш выбор
 
-        
+
         String input = scanner.nextLine();
         int choice;
         try {
                 choice = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("\nError: Please enter a number."); 
+                System.out.println("\nError: Please enter a number.");
                 continue;
             }
         if (choice == 4) {
                 System.out.println("\nThe program is completed."); //Программа завершена.
-                break; 
+                break;
             }
         MenuEntryExemple entry = null;
             switch (choice) {
                 case 1:
-                    entry = new MenuEntryExemple("\nManual input.") { 
+                    entry = new MenuEntryExemple("\nManual input.") {
                         @Override
                         public void run() {
                             System.out.println("\nYou have selected manual input."); // Вы выбрали ручной ввод
                             int count = readCount("\nHow many buses should I enter? Enter a value from 1 to 50.", scanner);
                             System.out.println("\nSelect your next steps."); // Выберете дальнейшие действия.
                             List<Bus> buses = service.busListManualInput(count, scanner);
-                            buses = service.listToCustomArrayList(buses); 
+                            buses = service.listToCustomArrayList(buses);
                             handleDataMenu(buses, scanner, service);
                         }
                     };
@@ -332,7 +332,7 @@ public abstract class MenuEntryExemple {
                             System.out.println("\nYou have selected reading a file.");
                             String filepath;
                             File file;
-                            while (true) { 
+                            while (true) {
                                 System.out.print("\nEnter the path to the file: "); //Введите путь к файлу:
                                 filepath = scanner.nextLine().trim();
                                 if (filepath.isEmpty()) {
@@ -373,14 +373,14 @@ public abstract class MenuEntryExemple {
                             int count = readCount("\nHow many buses should be generated? Enter a value from 1 to 50.", scanner); // сколько автобусов сгенерировать
                             List<Bus> buses = service.busListRandomInput(count);
                             buses = service.listToCustomArrayList(buses);
-                            System.out.println("\nBuses generated: " + buses.size() + "."); 
-                            
+                            System.out.println("\nBuses generated: " + buses.size() + ".");
+
                             handleDataMenu(buses, scanner, service);
                         }
                     };
                     break;
                 default:
-                    System.out.println("\nInvalid number. Try again."); 
+                    System.out.println("\nInvalid number. Try again.");
                     continue;
 
             }
@@ -390,7 +390,7 @@ public abstract class MenuEntryExemple {
                 entry.run();
             }
         }
-        
+
         scanner.close();
     }
 }
