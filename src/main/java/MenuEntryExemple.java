@@ -35,7 +35,6 @@ public abstract class MenuEntryExemple {
             System.out.print(prompt);
             String input = scanner.nextLine();
             try {
-              //  int count = readCount("Сколько автобусов ввести? ", scanner);
                 int count = Integer.parseInt(input);
                 if (count <= 0) {
                     System.out.println("\nThe quantity must be a positive number."); //Количество должно быть положительным числом
@@ -115,27 +114,28 @@ public abstract class MenuEntryExemple {
                 System.out.println("\n4. By the parity of the mileage"); //По чётности пробега
                 int algoChoice;
                 while (true) {
-                    String algoInput = scanner.nextLine();
-                    if (algoInput.isEmpty()) {
-                        System.out.println("\nThe input cannot be empty. Please repeat the sort selection:"); //Ввод не может быть пустым. Повторите выбор сортировки:
+                String algoInput = scanner.nextLine();
+                if (algoInput.isEmpty()) {
+                    System.out.println("\nThe input cannot be empty. Please repeat the sort selection:");
+                    continue;
+                }
+                try {
+                    algoChoice = Integer.parseInt(algoInput);
+                    if (algoChoice < 1 || algoChoice > 4) {
+                        System.out.println("\nError: Please enter a number between 1 and 4.");
                         continue;
                     }
-                    try {
-                        algoChoice = Integer.parseInt(algoInput);
-                        break;
-                    } catch (NumberFormatException e) {
-                        System.out.println("\nError: Please enter a number between 1 and 4."); //Ошибка: введите число от 1 до 4.
-                    }
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("\nError: Please enter a number between 1 and 4.");
                 }
+            }
                 StrategyType algoType = null;
                 switch (algoChoice) {
                     case 1: algoType = StrategyType.BUBBLE; break;
                     case 2: algoType = StrategyType.QUICK; break;
                     case 3: algoType = StrategyType.INSERTION; break;
                     case 4: algoType = StrategyType.EVEN_ODD; break;
-                    default:
-                        System.out.println("\nIncorrect algorithm selection. Sorting cancelled."); //Неверный выбор алгоритма. Отмена сортировки.
-                        break;
                 }
                 if (selectedField == null) {
                     break; // возврат в меню данных
